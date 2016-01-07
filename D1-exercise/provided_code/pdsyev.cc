@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
   char a[] = "C";
 
   blacs_get_(&wh, &wh, &icontxt);
-  blacs_gridinit_(&icontxt, a, &nprow, &npcol);
+  blacs_gridinit_(&icontxt, "C", &nprow, &npcol);
   blacs_gridinfo_(&icontxt, &nprow, &npcol, &my_nrow, &my_ncol);
   
   /* Hint	get local sizes of the matrices
@@ -71,8 +71,8 @@ int main(int argc, char *argv[])
      MKL_INT N_loc_col = numroc_
   */
   
-  MKL_INT N_loc_row = numroc_(&n, &nb, &my_nrow, 0, &nodes);
-  MKL_INT N_loc_col = numroc_(&n, &nb, &my_ncol, 0, &nodes);
+  MKL_INT N_loc_row = numroc_(&n, &nb, &my_nrow, &wh, &nprow);
+  MKL_INT N_loc_col = numroc_(&n, &nb, &my_ncol, &wh, &npcol);
 
   /* Hint  allocate local storage */
   /*	double* A = new double[..
@@ -89,8 +89,9 @@ int main(int argc, char *argv[])
   /* Hint 	fill matrix descriptor 
      descinit_(...
   */
-  
-  
+  int info;
+  descinit_(descA, &n, &n, &nb, &nb, &wh, &wh, &icontxt, &N_loc_row, &info);
+  descinit_(descZ, &n, &n, &nb, &nb, &wh, &wh, &icontxt, &N_loc_row, &info);
   
   /* the descritopr structure is showed. DO NOT write by hand, use descinit to fill the descriptor. 
    *
@@ -117,20 +118,22 @@ int main(int argc, char *argv[])
     }
   
   double* work;
-  int lwork=-1;
-  work=new double[2];
+  int lwork = -1;
+  work = new double[2];
   
   //Hint  do a work space queryworkspace query
-  int ione=1;	
-  // 	pdsyev( 	
-  lwork=(int)work[0];
+  int ione = 1;	
+
+  pdsyev("N", "L", &n, A, &ione, &ione, descA, W, Z, &ione, &ione, descZ, work, &lwork, &info);
+
+  lwork = (int)work[0];
   delete [] work;
-  work=new double[lwork];
+  work = new double[lwork];
   
   //Hint  now call the diagonalization routine with the correct workspace size. ADD TIMING EVALUATION!!!!
-  //	pdsyev(
-  
-  
+
+  pdsyev("N", "L", &n, A, &ione, &ione, descA, W, Z, &ione, &ione, descZ, work, &lwork, &info);
+ 
   //print output to file
   if (rank==0)
     {

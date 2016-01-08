@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-data = np.loadtxt("timing.dat")
+data = np.loadtxt("plasma_timing.dat")
 
 size_m = data[:,0]
 sec    = data[:,1]
@@ -12,6 +12,7 @@ lvec = len(data) / rep
 s = np.zeros(lvec)
 t = np.zeros(lvec)
 err = np.zeros(lvec)
+speedup = np.zeros(lvec)
 
 i = 0
 j = 0
@@ -41,14 +42,15 @@ while i < len(sec):
     i += rep
     j = 0
 
-print(t)
-print(err)
-print(len(t))
-print(len(err))
+speedup = t[0] / t
+
 plt.figure()
 # plt.plot(s, t)
-plt.errorbar(s, t, yerr=err)
-plt.xlabel('Matrix Size')
-plt.ylabel('Time (s)')
+plt.errorbar(s, speedup, yerr=err, label = 'PLASMA')
+plt.plot(s, s, label = 'Teor')
+plt.title('Speedup for Size = 8000')
+plt.xlabel('# Threads')
+plt.ylabel('Speedup')
+plt.legend(bbox_to_anchor = (.3, 1.))
 plt.show()
 # plt.savefig('timing.png')

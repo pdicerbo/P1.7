@@ -145,8 +145,8 @@ int main(int argc, char *argv[])
     {
       ofstream output;
       ofstream timing;
-      output.open("eigenvalues.dat",ios_base::trunc);
-      timing.open("timing.dat", ios_base::app);
+      output.open("new_eigenvalues.dat",ios_base::trunc);
+      timing.open("new_timing.dat", ios_base::app);
 
       cout << "Printing output " << endl;
       for (int i=0;i<n;i++)

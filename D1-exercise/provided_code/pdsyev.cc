@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
   
   MKL_INT descA[9];
   MKL_INT descZ[9];
-  cout << "Before initializing" << endl;
+
   /* Hint 	fill matrix descriptor 
      descinit_(...
   */

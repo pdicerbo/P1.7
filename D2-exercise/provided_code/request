@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#PBS -N plasma
+#PBS -l walltime=00:10:00
+#PBS -l nodes=1:ppn=20
+#PBS -q reserved3
+
+cd $PBS_O_WORKDIR
+
+module load mkl/11.1
+module load plasma/1.6.1/intel/14.0/mkl/11.1
+
+for TH in 1 2 4 6 8 10 12 14 16 18 20
+do
+
+# NDIM=$((4000+1000*$S))
+export PLASMA_NUM_THREADS=$TH
+
+count=1
+
+while [ $count -le 6 ]
+do
+
+./test_plasma.x 8000 $PLASMA_NUM_THREADS
+count=$((count+1))
+
+done
+
+done

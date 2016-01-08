@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
  */
   int icontxt = 0, wh = 0;
   int my_nrow, my_ncol;
-  char C[] = "C";
+  char C[] = "R";
 
   blacs_get_(&wh, &wh, &icontxt);
   blacs_gridinit_(&icontxt, C, &nprow, &npcol);

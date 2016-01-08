@@ -1,13 +1,14 @@
 #!/bin/bash
 
 #PBS -N scalapack
-#PBS -l walltime=00:20:00
+#PBS -l walltime=05:20:00
 #PBS -l nodes=1:ppn=20
-#PBS -q blade
+#PBS -q reserved3
 
 cd $PBS_O_WORKDIR
 
-module load mkl/intel
+module load testing
+module load mkl/15.0 #intel
 module load openmpi #/1.10.1/intel/15.0 #impi-trial/5.0.1.035
 
 # mpirun -np 20 pdsyev.x 200 4 5 10

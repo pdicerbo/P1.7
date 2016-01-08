@@ -1,7 +1,8 @@
 CC=mpicxx
 
 # MKLROOT variable for elcid
-MKLROOT=/opt/intel/mkl
+# MKLROOT=/opt/intel/mkl
+
 # LIBS=-L$(MKLROOT)/lib/intel64 -lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64 -lpthread -lm
 
 # compile with the following flag for use static iMPI

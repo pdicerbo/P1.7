@@ -60,10 +60,10 @@ int main(int argc, char *argv[])
  */
   int icontxt = 0, wh = 0;
   int my_nrow, my_ncol;
-  char a[] = "C";
+  char C[] = "C";
 
   blacs_get_(&wh, &wh, &icontxt);
-  blacs_gridinit_(&icontxt, "C", &nprow, &npcol);
+  blacs_gridinit_(&icontxt, C, &nprow, &npcol);
   blacs_gridinfo_(&icontxt, &nprow, &npcol, &my_nrow, &my_ncol);
   
   /* Hint	get local sizes of the matrices
@@ -123,8 +123,12 @@ int main(int argc, char *argv[])
   
   //Hint  do a work space queryworkspace query
   int ione = 1;	
+  char N[] = "N";
+  char L[] = "L";
+  
+  double start, end;
 
-  pdsyev("N", "L", &n, A, &ione, &ione, descA, W, Z, &ione, &ione, descZ, work, &lwork, &info);
+  pdsyev(N, L, &n, A, &ione, &ione, descA, W, Z, &ione, &ione, descZ, work, &lwork, &info);
 
   lwork = (int)work[0];
   delete [] work;
@@ -132,19 +136,28 @@ int main(int argc, char *argv[])
   
   //Hint  now call the diagonalization routine with the correct workspace size. ADD TIMING EVALUATION!!!!
 
-  pdsyev("N", "L", &n, A, &ione, &ione, descA, W, Z, &ione, &ione, descZ, work, &lwork, &info);
- 
+  start = MPI_Wtime();
+  pdsyev(N, L, &n, A, &ione, &ione, descA, W, Z, &ione, &ione, descZ, work, &lwork, &info);
+  end = MPI_Wtime();
+
   //print output to file
   if (rank==0)
     {
       ofstream output;
+      ofstream timing;
       output.open("eigenvalues.dat",ios_base::trunc);
-      cout<<"Printing output "<<endl;
+      timing.open("timing.dat", ios_base::app);
+
+      cout << "Printing output " << endl;
       for (int i=0;i<n;i++)
 	{
 	  output<<W[i] <<endl;		
 	}
       output.close();
+
+      timing << n << "\t" << end - start << endl;
+      timing.close();
+      // cout << "Elapsed time: " << end - start << " s" << endl;
     }
   delete [] A;
   delete [] W;

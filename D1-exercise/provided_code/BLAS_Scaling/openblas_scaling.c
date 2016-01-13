@@ -27,7 +27,7 @@ int main(int argc, char** argv){
   int i, j, k;
   double start, end;
   FILE* fp;
-
+  openblas_set_num_threads(1);
   A = (double*)malloc(N * N * sizeof(double));
   B = (double*)malloc(N * N * sizeof(double));
   C = (double*)malloc(N * N * sizeof(double));
@@ -62,7 +62,6 @@ int main(int argc, char** argv){
   printf("\tGFLOPS: %lg \n\n", 2.*N*N*N/1.e9/(end - start));
 
 #endif /* _DEBUG */
-
   
   fp = fopen("dgemm_openblas.dat", "a+");
   if(N > 2000)

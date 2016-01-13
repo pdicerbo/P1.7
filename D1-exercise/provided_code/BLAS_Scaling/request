@@ -7,9 +7,8 @@
 
 cd $PBS_O_WORKDIR
 
-module load mkl/11.1
-
-# mpirun -np 20 pdsyev.x 200 4 5 10
+# module load mkl/11.1
+module load openblas/0.2.13/gnu/4.9.2
 
 for S in 100 200 300 500 700 1000 1500 2000 2500 3000 3500 4000 4500 5000
 do
@@ -17,7 +16,8 @@ count=1
 while [ $count -le 10 ]
 do
 
-./blas_scaling.x $S
+# ./blas_scaling.x $S
+./openblas_scaling.x $S
 
 count=$((count+1))
 done

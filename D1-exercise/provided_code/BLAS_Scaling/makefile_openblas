@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=
-LIBS=-L/u/shared/programs/x86_64/openblas/0.2.13/gnu/4.9.2/lib -lopenblas
+LIBS=-lopenblas
 INCL=-I/u/shared/programs/x86_64/openblas/0.2.13/gnu/4.9.2/include
 
 all=openblas_scaling.x

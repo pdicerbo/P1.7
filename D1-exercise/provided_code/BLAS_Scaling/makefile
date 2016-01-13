@@ -1,11 +1,11 @@
 CC=gcc
 CFLAGS=
-LIBS=-L/u/shared/programs/x86_64/openblas/0.2.13/gnu/4.9.2/lib -lopenblas
-INCL=-I/u/shared/programs/x86_64/openblas/0.2.13/gnu/4.9.2/include
+LIBS=-Wl,--no-as-needed -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_core -lmkl_sequential -lpthread -lm
+INCL=-I$(MKLROOT)/include
 
-all=openblas_scaling.x
+all=blas_scaling.x
 
-openblas_scaling.x: openblas_scaling.o
+blas_scaling.x: blas_scaling.o
 	$(CC) $(LIBS) $^ -o $@
 
 %.o:%.c

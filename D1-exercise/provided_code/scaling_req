@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#PBS -N scalapack
+#PBS -l walltime=00:10:00
+#PBS -l nodes=1:ppn=20
+#PBS -q reserved3
+
+cd $PBS_O_WORKDIR
+
+module load testing
+module load mkl/15.0 #intel
+module load openmpi #/1.10.1/intel/15.0 #impi-trial/5.0.1.035
+
+# for S in 1 2 4 6 8 10 12 14 16 18 20
+# do
+
+S=1
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np $S pdsyev.x 8000 1 1 64
+count=$((count+1))
+done
+
+# done

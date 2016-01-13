@@ -13,7 +13,7 @@ LIBS=${MKLROOT}/lib/intel64/libmkl_scalapack_lp64.a -Wl,--start-group ${MKLROOT}
 
 all=pdsyev.x
 
-pdsyev.x: pdsyev.o
+5x4pdsyev.x: pdsyev.o
 	$(CC) -I${MKLROOT}/include $^ $(LIBS) -o $@
 
 %.o: %.cc

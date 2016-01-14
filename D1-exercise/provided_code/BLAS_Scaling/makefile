@@ -9,7 +9,7 @@ blas_scaling.x: blas_scaling.o
 	$(CC) $(LIBS) $^ -o $@
 
 %.o:%.c
-	$(CC) $(INCL) -c $^
+	$(CC) -O2 $(INCL) -c $^
 
 clean:
 	rm -rf *.o *.x

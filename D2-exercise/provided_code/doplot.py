@@ -1,12 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# data  = np.loadtxt("plasma_timing.safe")
-# ndata = np.loadtxt("scaling_timing.dat")
+data  = np.loadtxt("plasma_timing.safe")
+ndata = np.loadtxt("scaling_timing.dat")
 # data  = np.loadtxt("4000plasma_timing.dat")
 # ndata = np.loadtxt("4000new_timing.dat")
-data  = np.loadtxt("10plasma_timing.dat")
-ndata = np.loadtxt("10new_timing.dat")
+# data  = np.loadtxt("10plasma_timing.dat")
+# ndata = np.loadtxt("10new_timing.dat")
 
 size_m = data[:,0]
 sec    = data[:,1]
@@ -65,11 +65,13 @@ plt.figure()
 plt.errorbar(s, speedup, yerr=err, label = 'PLASMA')
 plt.errorbar(s, nspeedup, yerr=nerr, label = 'ScaLAPACK')
 plt.plot(s, s, label = 'Teor')
-# plt.title('Speedup for matrix size = 8000')
-# plt.title('Speedup for matrix size = 4000')
-plt.title('Speedup for matrix size = 10000')
+plt.title('Speedup for matrix size = 8000 (ULISSE)')
+# plt.title('Speedup for matrix size = 4000 (ULISSE)')
+# plt.title('Speedup for matrix size = 10000 (ULISSE)')
 plt.xlabel('# Threads')
 plt.ylabel('Speedup')
 plt.legend(bbox_to_anchor = (.35, 1.))
 # plt.show()
-plt.savefig('scaling_10.png')
+plt.savefig('scaling_8000.png')
+# plt.savefig('scaling_4000.png')
+# plt.savefig('scaling_10.png')

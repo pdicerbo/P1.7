@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-nfiles = ["12x2timing.dat", "1x24timing.dat", "2x12timing.dat", "3x8timing.dat", "8x3timing.dat", "6x4timing.dat"]
+nfiles = ["12x2timing.dat", "1x24timing.dat", "2x12timing.dat", "3x8timing.dat", "8x3timing.dat", "6x4timing.dat", "4x6timing.dat"]
 rep = 10     # number of repetition for each matrix size
 
 plt.figure()

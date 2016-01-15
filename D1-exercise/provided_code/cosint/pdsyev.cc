@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
       ofstream output;
       ofstream timing;
       output.open("eigenvalues.dat",ios_base::trunc);
-      timing.open("8x3timing.dat", ios_base::app);
+      timing.open("4x6timing.dat", ios_base::app);
 
       cout << "Printing output " << endl;
       for (int i=0;i<n;i++)

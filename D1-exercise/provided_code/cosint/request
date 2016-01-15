@@ -18,7 +18,7 @@ count=1
 while [ $count -le 10 ]
 do
 # mpirun -np 24 pdsyev.x $NDIM 6 4 64
-mpirun -np 24 8x3pdsyev.x $NDIM 8 3 64
+mpirun -np 24 pdsyev.x $NDIM 4 6 64
 count=$((count+1))
 done
 done

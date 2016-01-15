@@ -1,0 +1,91 @@
+#!/bin/bash
+
+#PBS -N scalapack
+#PBS -l walltime=06:40:00
+#PBS -l nodes=1:ppn=20
+#PBS -q reserved3
+
+cd $PBS_O_WORKDIR
+
+module load testing
+module load mkl/15.0 #intel
+module load openmpi #/1.10.1/intel/15.0 #impi-trial/5.0.1.035
+
+S=1
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np $S pdsyev.x 10000 1 1 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 2 pdsyev.x 10000 2 1 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 4 pdsyev.x 10000 2 2 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 6 pdsyev.x 10000 2 3 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 8 pdsyev.x 10000 4 2 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 10 pdsyev.x 10000 2 5 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 12 pdsyev.x 10000 3 4 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 14 pdsyev.x 10000 2 7 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 16 pdsyev.x 10000 4 4 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 18 pdsyev.x 10000 2 9 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 20 pdsyev.x 10000 4 5 64
+count=$((count+1))
+done

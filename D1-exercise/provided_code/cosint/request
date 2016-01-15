@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#PBS -N scalapack
+#PBS -l walltime=05:20:00
+#PBS -l nodes=1:ppn=24
+
+cd $PBS_O_WORKDIR
+
+module load mkl
+module load openmpi 
+
+for S in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 # 15 16
+do
+
+NDIM=$((4000+1000*$S))
+# echo $NDIM
+count=1
+while [ $count -le 10 ]
+do
+# mpirun -np 24 pdsyev.x $NDIM 6 4 64
+mpirun -np 24 8x3pdsyev.x $NDIM 8 3 64
+count=$((count+1))
+done
+done

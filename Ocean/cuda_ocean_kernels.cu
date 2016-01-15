@@ -54,8 +54,51 @@ __global__ void ocean_kernel(int *grid, int xdim, int ydim, int offset)
 #ifdef VERSION2
 __global__ void ocean_kernel(int *grid, int xdim, int ydim, int offset)
 {
+    int threads = gridDim.x*blockDim.x;
+    int threadId  = blockDim.x*blockIdx.x + threadIdx.x;
 
-    // Your code for step 2
+    if (threads > (xdim-2)*(ydim-2)) {
+        threads = (xdim-2)*(ydim-2);
+        if (threadId >= threads) {
+            return;
+        }
+    }
+
+    int chunk = (xdim-2)*(ydim-2)/threads;
+    // int start = threadId * chunk;
+    // int end = (threadId + 1) * chunk;
+    int start = 0.;
+    int end = chunk;
+
+    int threadsPerRow = (xdim - 2);
+
+    for (int i=start; i<end; i++) {
+        if (offset) {
+            if (threadIdx.x % 2) continue;
+        } else {
+            if (!(threadIdx.x % 2)) continue;
+        }
+
+        int row = (i * gridDim.x * blockDim.x) / threadsPerRow;
+        int col = (i * gridDim.x * blockDim.x) % threadsPerRow;
+
+        int loc = xdim + row * xdim + col + blockDim.x*blockIdx.x + threadIdx.x;
+        if (offset) {
+            loc += (row%2) ? 1 : 0;
+            loc += 1;
+        } else {
+            loc += (row%2) ? 0 : 1;
+        }
+        // printf("Row: %d, Col: %d\n", row, col);
+        // printf("loc: %d\n", loc);
+
+        grid[loc] = (grid[loc]
+                  + grid[loc - xdim]
+                  + grid[loc + xdim]
+                  + grid[loc + 1]
+                  + grid[loc - 1])
+                  / 5;
+    }
 }
 #endif
 

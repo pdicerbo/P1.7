@@ -2,7 +2,7 @@ CXX= gcc
 CXXFLAGS= -O3 -std=c99
 LDFLAGS =
 CUDACC = nvcc
-CUFLAGS = -O3 -arch=sm_30
+CUFLAGS = -O3 -arch=sm_35
 
 all: serial_ocean cuda_ocean
 

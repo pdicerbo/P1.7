@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-#define VERSION1
+//#define VERSION1
 //#define VERSION15
-//#define VERSION2
+#define VERSION2
 //#define VERSION3
 
 #include "cuda_ocean_kernels.cu"
@@ -57,6 +57,7 @@ void ocean (int **grid, int xdim, int ydim, int timesteps)
 
     dim3 gridDim(16,1,1);
     dim3 blockDim(128,1,1);
+
 
     for (int ts=0; ts<timesteps; ts++) {
         #if defined(VERSION3)

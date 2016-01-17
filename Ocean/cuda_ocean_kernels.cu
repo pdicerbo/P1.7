@@ -162,7 +162,7 @@ __global__ void split_array_kernel(int *grid, int *red_grid, int *black_grid, in
 
     // left column
     if(col == 0){
-      if(red)
+      if( red )
     	black_grid[loc / 2] = grid[loc - 1];
       else
     	red_grid[loc / 2] = grid[loc - 1];

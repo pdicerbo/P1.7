@@ -2,8 +2,9 @@
 
 //#define VERSION1
 //#define VERSION15
-#define VERSION2
-//#define VERSION3
+//#define VERSION2
+#define VERSION3
+#define DBG
 
 #include "cuda_ocean_kernels.cu"
 
@@ -40,6 +41,66 @@ void ocean (int **grid, int xdim, int ydim, int timesteps)
 
     cudaMemcpy(d_grid, &grid[0][0], xdim*ydim*sizeof(int), cudaMemcpyHostToDevice);
     Check_CUDA_Error("memcpy grid to device failed");
+
+#ifdef DBG
+
+    int *d_red_grid, *d_black_grid;
+    int *host_red, *host_black, *mygrid;
+    cudaMalloc(&d_red_grid, sizeof(int)*xdim*ydim / 2);
+    Check_CUDA_Error("malloc red_grid failed");
+    cudaMalloc(&d_black_grid, sizeof(int)*xdim*ydim / 2);
+    Check_CUDA_Error("malloc black_grid failed");
+
+    split_array_kernel<<<16,512>>>(d_grid, d_red_grid, d_black_grid, xdim, ydim);
+    // split_array_kernel<<<16,128>>>(d_grid, d_red_grid, d_black_grid, xdim, ydim);
+    Check_CUDA_Error("split_array_kernel launch failed");
+
+    host_red   = (int*)malloc(xdim * ydim * sizeof(int)/2);
+    host_black = (int*)malloc(xdim * ydim * sizeof(int)/2);
+    mygrid     = (int*)malloc(xdim * ydim * sizeof(int));
+
+    cudaMemcpy(host_red, d_red_grid, xdim*ydim*sizeof(int)/2, cudaMemcpyDeviceToHost);
+    Check_CUDA_Error("memcpy grid back failed 0");
+    cudaMemcpy(host_black, d_black_grid, xdim*ydim*sizeof(int)/2, cudaMemcpyDeviceToHost);
+    Check_CUDA_Error("memcpy grid back failed 1");
+    cudaMemcpy(mygrid, d_grid, xdim*ydim*sizeof(int), cudaMemcpyDeviceToHost);
+    Check_CUDA_Error("memcpy grid back failed 2");
+
+    int count = 0;
+    int err_count = 0;
+    int zero_black = 0;
+    int zero_red = 0;
+    int zero_count = 0;
+    int index;
+    for(int j = 0; j < xdim-1; j++){
+      for(int k = 0; k < ydim-1; k++){
+	index = k + j * xdim;
+	if(count % 2){
+	  if(host_red[index / 2] != mygrid[index])
+	    err_count++;
+	  if(host_red[index / 2] == 0)
+	    ++zero_red;
+	}
+	else{
+	  if(host_black[index / 2] != mygrid[index])
+	    err_count++;
+	  if(host_black[index / 2] == 0)
+	    zero_black++;
+	}
+	count++;
+      }
+    }
+
+    printf("\n\tErrors: %d; Correct = %d\n", err_count, xdim*ydim - err_count);
+    printf("\tMyGrid zero count: %d\n", zero_count);
+    printf("\tColor zero black: %d\n", zero_black);
+    printf("\tColor zero red: %d\n", zero_red);
+    printf("\tgrid[0] == %d == %d == black[0];\n", mygrid[0], host_black[0]);
+    printf("\tgrid[1] == %d == %d == red[0];\n", mygrid[1], host_red[0]);
+    printf("\tgrid[xdim + 1] == %d == %d == black[xdim/2];\n", mygrid[xdim+1], host_black[xdim/2]);
+    printf("\tgrid[xdim + 2] == %d == %d == red[xdim/2 + 1];\n\n", mygrid[xdim+2], host_red[xdim/2 + 1]);
+    exit(0);
+#endif // DBG
 
     #if defined(VERSION3)
 

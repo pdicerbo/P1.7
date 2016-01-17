@@ -72,8 +72,8 @@ void ocean (int **grid, int xdim, int ydim, int timesteps)
     int zero_red = 0;
     int zero_count = 0;
     int index;
-    for(int j = 0; j < xdim-1; j++){
-      for(int k = 0; k < ydim-1; k++){
+    for(int j = 1; j < xdim-1; j++){
+      for(int k = 1; k < ydim-1; k++){
 	index = k + j * xdim;
 	if(count % 2){
 	  if(host_red[index / 2] != mygrid[index])
@@ -95,7 +95,7 @@ void ocean (int **grid, int xdim, int ydim, int timesteps)
     printf("\tMyGrid zero count: %d\n", zero_count);
     printf("\tColor zero black: %d\n", zero_black);
     printf("\tColor zero red: %d\n", zero_red);
-    printf("\tgrid[0] == %d == %d == black[0];\n", mygrid[0], host_black[0]);
+    printf("\tgrid[2] == %d == %d == black[1];\n", mygrid[2], host_black[1]);
     printf("\tgrid[1] == %d == %d == red[0];\n", mygrid[1], host_red[0]);
     printf("\tgrid[xdim + 1] == %d == %d == black[xdim/2];\n", mygrid[xdim+1], host_black[xdim/2]);
     printf("\tgrid[xdim + 2] == %d == %d == red[xdim/2 + 1];\n\n", mygrid[xdim+2], host_red[xdim/2 + 1]);

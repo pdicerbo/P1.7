@@ -171,9 +171,9 @@ __global__ void split_array_kernel(int *grid, int *red_grid, int *black_grid, in
     // right column
     if(col == xdim - 3){
       if( red )
-    	black_grid[loc / 2 + 1] = grid[loc + 1];
+    	black_grid[loc / 2] = grid[loc + 1];
       else
-    	red_grid[loc / 2 + 1] = grid[loc + 1];
+    	red_grid[loc / 2] = grid[loc + 1];
     }
   }
 }

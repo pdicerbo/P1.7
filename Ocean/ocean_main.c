@@ -85,8 +85,8 @@ int main(int argc, char* argv[])
 
 void printGrid(int** grid, int xdim, int ydim)
 {
-    for (int i=1; i<xdim-1; i++) {
-        for (int j=1; j<ydim-1; j++) {
+    for (int i=0; i<xdim; i++) {
+        for (int j=0; j<ydim; j++) {
             printf("%05d  ", grid[i][j]);
         }
         printf("\n");

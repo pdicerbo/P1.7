@@ -99,6 +99,49 @@ __global__ void ocean_kernel(int *grid, int xdim, int ydim, int offset)
 
 
 #ifdef VERSION3
+__global__ void ocean_kernel_V2(int *grid, int xdim, int ydim, int offset)
+{
+    int threads = gridDim.x*blockDim.x;
+    int threadId  = blockDim.x*blockIdx.x + threadIdx.x;
+
+    if (threads > (xdim-2)*(ydim-2)) {
+        threads = (xdim-2)*(ydim-2);
+        if (threadId >= threads) {
+            return;
+        }
+    }
+
+    int chunk = (xdim-2)*(ydim-2)/threads;
+    int start = 0.;
+
+    int threadsPerRow = (xdim - 2);
+
+    for (int i=start; i < chunk; i++) {
+      if (offset){
+            if (threadIdx.x % 2) continue;
+        } else {
+            if (!(threadIdx.x % 2)) continue;
+        }
+
+        int row = (i * threads) / threadsPerRow;
+        int col = (i * threads) % threadsPerRow;
+
+        int loc = xdim + row * xdim + col + threadId;
+        if (offset) {
+            loc += (row%2) ? 1 : 0;
+            loc += 1;
+        } else {
+            loc += (row%2) ? 0 : 1;
+        }
+
+        grid[loc] = (grid[loc]
+                  + grid[loc - xdim]
+                  + grid[loc + xdim]
+                  + grid[loc + 1]
+                  + grid[loc - 1])
+                  / 5;
+    }
+}
 
 __global__ void split_array_kernel(int *grid, int *red_grid, int *black_grid, int xdim, int ydim)
 {
@@ -260,7 +303,7 @@ __global__ void ocean_kernel(int *red_grid, int *black_grid, int xdim, int ydim,
   int threads  = gridDim.x * blockDim.x;
   int threadId = blockDim.x * blockIdx.x + threadIdx.x;
 
-  if (threads > (xdim - 2) * (ydim - 2) / 2) {
+  if (threads > ((xdim - 2) * (ydim - 2) / 2)) {
     threads = (xdim - 2) * (ydim - 2) / 2;
     if (threadId >= threads)
       return;
@@ -271,7 +314,7 @@ __global__ void ocean_kernel(int *red_grid, int *black_grid, int xdim, int ydim,
 
   int chunk = (xdim - 2) * (ydim - 2) / (2 * threads);
   int threadsPerRow = (xdim - 2) / 2;
-  int i, edge;
+  int i, edge, left, right;
   int shift = xdim / 2;
 
   for(i = 0; i < chunk; i++){
@@ -284,12 +327,20 @@ __global__ void ocean_kernel(int *red_grid, int *black_grid, int xdim, int ydim,
       edge = (row + 1) / 2;
       edge *= 2;
       loc  += edge; // need to skip the elements in the boundaries
-      
+      if( row % 2 ){
+	left = loc - 1;
+	right = loc;
+      }
+      else{
+	left = loc;
+	right = loc + 1;
+      }
+
       black_grid[loc] = (black_grid[loc]
 			 + red_grid[loc - shift]
 			 + red_grid[loc + shift]
-			 + red_grid[loc + 1]
-			 + red_grid[loc]) / 5;
+			 + red_grid[left]
+			 + red_grid[right]) / 5;
     }
     else{
       // red_grid update
@@ -298,11 +349,20 @@ __global__ void ocean_kernel(int *red_grid, int *black_grid, int xdim, int ydim,
       edge *= 2;
       loc  += edge; // need to skip the elements in the boundaries
 
+      if( row % 2 ){
+	left = loc;
+	right = loc + 1;
+      }
+      else{
+	left = loc - 1;
+	right = loc;
+      }
+
       red_grid[loc] = (red_grid[loc]
 		       + black_grid[loc - shift]
 		       + black_grid[loc + shift]
-		       + black_grid[loc]
-		       + black_grid[loc - 1]) / 5;
+		       + black_grid[left]
+		       + black_grid[right]) / 5;
 
     }
 

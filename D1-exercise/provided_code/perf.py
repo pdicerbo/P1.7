@@ -1,10 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
+from mpl_toolkits.axes_grid1.inset_locator import mark_inset
 
 nfiles = ["1x20timing.dat", "5x4timing.dat", "4x5timing.dat", "2x10timing.dat", "10x2timing.dat"]
 rep = 10     # number of repetition for each matrix size
 
-plt.figure()
+# plt.figure()
+fig, ax = plt.subplots() # create a new figure with a default 111 subplot
+axins = zoomed_inset_axes(ax, 2.8, loc=2) # zoom-factor: 2.5, location: upper-left
 
 for namef in nfiles:
     data1 = np.loadtxt(namef)
@@ -45,11 +49,18 @@ for namef in nfiles:
         i += rep
         j = 0
 
-    plt.errorbar(s, t1, yerr=err1, label=namef[:-10])
-
-plt.xlabel('Matrix Size')
-plt.ylabel('Time (s)')
-plt.title('Execution Time (ULISSE)')
-plt.legend(bbox_to_anchor = (.24, 1.))
-plt.show()
-# plt.savefig('timing.png')
+    ax.errorbar(s, t1, yerr=err1, label=namef[:-10])
+    axins.errorbar(s, t1, yerr=err1, label=namef[:-10])
+    
+axins.set_xlim(4000, 8000)
+axins.set_ylim(2, 28)
+plt.yticks(visible=False)
+plt.xticks(visible=False)
+mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
+# plt.axis([4000, 18000, 0, 300])
+ax.set_xlabel('Matrix Size')
+ax.set_ylabel('Time (s)')
+ax.set_title('PDSYEV Execution Time (ULISSE)')
+ax.legend(title = 'Grid structure:', bbox_to_anchor = (1., .42))
+# plt.show()
+plt.savefig('pdsyev_timing.png')

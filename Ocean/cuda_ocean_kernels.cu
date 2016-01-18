@@ -266,28 +266,43 @@ __global__ void ocean_kernel(int *red_grid, int *black_grid, int xdim, int ydim,
       return;
   }
 
+  if( (xdim - 2) * (ydim - 2) % (2 * threads) )
+    return;
+
   int chunk = (xdim - 2) * (ydim - 2) / (2 * threads);
   int threadsPerRow = (xdim - 2) / 2;
-  int i, edge = 0;
+  int i, edge;
+  int shift = xdim / 2;
 
   for(i = 0; i < chunk; i++){
 
-    int real_row = (i * threads + threadId) / threadsPerRow;
-    int loc = threadId + i * threads + xdim / 2;
+    int row = (i * threads + threadId) / threadsPerRow;
+    int loc = threadId + i * threads + shift;
 
     if(offset){
       //black_grid update
-      edge += ( real_row % 2 ) ? 2 : 0;
-      loc += ( real_row % 2 ) ? 2 : 0;
+      edge = (row + 1) / 2;
+      edge *= 2;
+      loc  += edge; // need to skip the elements in the boundaries
       
+      black_grid[loc] = (black_grid[loc]
+			 + red_grid[loc - shift]
+			 + red_grid[loc + shift]
+			 + red_grid[loc + 1]
+			 + red_grid[loc]) / 5;
     }
     else{
       // red_grid update
       loc += 1;
-      if( real_row > 0 ){
-	edge += ( real_row % 2 ) ? 0 : 2;
-	loc += ( real_row % 2 ) ? 0 : 2;
-	}
+      edge = row / 2;
+      edge *= 2;
+      loc  += edge; // need to skip the elements in the boundaries
+
+      red_grid[loc] = (red_grid[loc]
+		       + black_grid[loc - shift]
+		       + black_grid[loc + shift]
+		       + black_grid[loc]
+		       + black_grid[loc - 1]) / 5;
 
     }
 

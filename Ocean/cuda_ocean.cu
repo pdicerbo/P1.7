@@ -4,7 +4,7 @@
 //#define VERSION15
 //#define VERSION2
 #define VERSION3
-#define DBG
+// #define DBG
 
 #include "cuda_ocean_kernels.cu"
 

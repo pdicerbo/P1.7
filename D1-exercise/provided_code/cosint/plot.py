@@ -57,7 +57,7 @@ for namef in nfiles:
     
 # axis lim for the "zoom" plot
 axins.set_xlim(4000, 8000)
-axins.set_ylim(2, 28)
+axins.set_ylim(0, 20)
 plt.yticks(visible=False)
 plt.xticks(visible=False)
 mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")

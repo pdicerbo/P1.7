@@ -180,12 +180,117 @@ __global__ void split_array_kernel(int *grid, int *red_grid, int *black_grid, in
 
 __global__ void unsplit_array_kernel(int *grid, int *red_grid, int *black_grid, int xdim, int ydim)
 {
-    // This kernel should take the red_grid and black_grid and copy it back into grid
+  // "Inverse" of the previous function
+  int threads  = gridDim.x * blockDim.x;
+  int threadId = blockDim.x * blockIdx.x + threadIdx.x;
+  
+  if (threads > (xdim - 2)*(ydim - 2) ) {
+    threads = (xdim - 2) * (ydim - 2);
+    if (threadId >= threads) {
+      return;
+    }
+  }
+  
+  int chunk = (xdim - 2) * (ydim - 2) / threads;
+  if( (xdim - 2) * (ydim - 2) % threads )
+    return;
+
+  int threadsPerRow = (xdim - 2);
+  int red;
+
+  for (int i = 0; i < chunk; i++) {
+    int row = (i * threads + threadId) / threadsPerRow;
+    int col = (i * threads + threadId) % threadsPerRow;
+    int loc = (row + 1) * xdim + 1 + col;
+
+    if(row % 2){
+      if(col % 2)
+	red = 0;
+      else
+	red = 1;
+    }
+    else{
+      if(col % 2)
+	red = 1;
+      else
+	red = 0;
+    }
+
+    if( red )
+      grid[loc] = red_grid[loc / 2];
+    else
+      grid[loc] = black_grid[loc / 2];
+
+    // BOUNDARIES
+    if(row == 0){
+      if( red )
+    	grid[loc - xdim] = black_grid[col / 2 + 1];
+      else
+    	grid[loc - xdim] = red_grid[col / 2];
+    }
+    // last row
+    if(row == ydim - 3){
+      if( red )
+    	grid[loc + xdim] = black_grid[(loc + xdim) / 2 ];
+      else
+    	grid[loc + xdim] = red_grid[(loc + xdim) / 2];
+    }
+
+    // left column
+    if(col == 0){
+      if( red )
+    	grid[loc - 1] = black_grid[loc / 2];
+      else
+    	grid[loc - 1] = red_grid[loc / 2];
+    }
+
+    // right column
+    if(col == xdim - 3){
+      if( red )
+    	grid[loc + 1] = black_grid[loc / 2];
+      else
+    	grid[loc + 1] = red_grid[loc / 2];
+    }
+  }
 }
 
 __global__ void ocean_kernel(int *red_grid, int *black_grid, int xdim, int ydim, int offset)
 {
-    // Your code for step 3
+  int threads  = gridDim.x * blockDim.x;
+  int threadId = blockDim.x * blockIdx.x + threadIdx.x;
+
+  if (threads > (xdim - 2) * (ydim - 2) / 2) {
+    threads = (xdim - 2) * (ydim - 2) / 2;
+    if (threadId >= threads)
+      return;
+  }
+
+  int chunk = (xdim - 2) * (ydim - 2) / (2 * threads);
+  int threadsPerRow = (xdim - 2) / 2;
+  int edge = 0;
+
+  for(i = 0; i < chunk; i++){
+
+    int real_row = (i * threads + threadId) / threadsPerRow;
+    int loc = threadId + i * threads + xdim / 2;
+
+    if(offset){
+      //black_grid update
+      edge += ( real_row % 2 ) ? 2 : 0;
+      loc += ( real_row % 2 ) ? 2 : 0;
+      
+    }
+    else{
+      // red_grid update
+      loc += 1;
+      if( row > 0 ){
+	edge += ( real_row % 2 ) ? 0 : 2;
+	loc += ( real_row % 2 ) ? 0 : 2;
+	}
+
+    }
+
+  }
 }
 
 #endif // VERSION3

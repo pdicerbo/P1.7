@@ -146,6 +146,7 @@ __global__ void split_array_kernel(int *grid, int *red_grid, int *black_grid, in
       black_grid[loc / 2] = grid[loc];
 
     // BOUNDARIES
+    // first row
     if(row == 0){
       if( red )
     	black_grid[col / 2 + 1] = grid[loc - xdim];
@@ -267,7 +268,7 @@ __global__ void ocean_kernel(int *red_grid, int *black_grid, int xdim, int ydim,
 
   int chunk = (xdim - 2) * (ydim - 2) / (2 * threads);
   int threadsPerRow = (xdim - 2) / 2;
-  int edge = 0;
+  int i, edge = 0;
 
   for(i = 0; i < chunk; i++){
 
@@ -283,7 +284,7 @@ __global__ void ocean_kernel(int *red_grid, int *black_grid, int xdim, int ydim,
     else{
       // red_grid update
       loc += 1;
-      if( row > 0 ){
+      if( real_row > 0 ){
 	edge += ( real_row % 2 ) ? 0 : 2;
 	loc += ( real_row % 2 ) ? 0 : 2;
 	}

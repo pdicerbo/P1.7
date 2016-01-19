@@ -17,7 +17,7 @@
 
 int main (int argc, char* argv[])
 {
-
+  
   real_Double_t   gpu_time, cpu_time, mcpu_time;
   int i,j;
   

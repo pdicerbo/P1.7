@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
 from mpl_toolkits.axes_grid1.inset_locator import mark_inset
 
-nfiles = ["dsyevd.dat", "dsyevd_gpu.dat", "dsyevd_m.dat"] # data files
+# nfiles = ["dsyevd.dat", "dsyevd_gpu.dat", "dsyevd_m.dat"] # data files
+nfiles = ["scalapack_timing.dat", "plasma_timing.dat", "magma_timing.dat"] # data files
 rep = 6     # number of repetition for each matrix size
 
 fig, ax = plt.subplots() # create a new figure with a default 111 subplot
@@ -53,11 +54,12 @@ for namef in nfiles:
         i += rep
         j = 0
         
-    ax.errorbar(s, t1, yerr=err1, label=namef[:-4]) 
+    ax.errorbar(s, t1, yerr=err1, label=namef[:-11].upper()) 
 
 ax.set_xlabel('Matrix Size')
 ax.set_ylabel('Time (s)')
-ax.set_title('MAGMA PDSYEVD Execution Time (ULISSE)')
-ax.legend(bbox_to_anchor = (.35, 1.))
+# ax.set_title('MAGMA Execution Time (ULISSE)')
+ax.set_title('DSYEV with ScaLAPACK - PLASMA - MAGMA (Execution Time on ULISSE)\n')
+ax.legend(bbox_to_anchor = (.34, 1.))
 # plt.show()
-plt.savefig('magma_timing.png')
+plt.savefig('final_comparison.png')

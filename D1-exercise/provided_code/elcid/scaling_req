@@ -1,0 +1,76 @@
+#!/bin/bash
+
+#PBS -N scalapack
+#PBS -l walltime=06:40:00
+#PBS -l nodes=1:ppn=64
+#PBS -q blade
+
+cd $PBS_O_WORKDIR
+
+module load openmpi
+module load mkl/intel
+
+SIZE=18000
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 1 pdsyev.x $SIZE 1 1 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 2 pdsyev.x $SIZE 2 1 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 4 pdsyev.x $SIZE 2 2 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 8 pdsyev.x $SIZE 4 2 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 16 pdsyev.x $SIZE 4 4 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 24 pdsyev.x $SIZE 4 6 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 32 pdsyev.x $SIZE 4 8 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 48 pdsyev.x $SIZE 6 8 64
+count=$((count+1))
+done
+
+count=1
+while [ $count -le 6 ]
+do
+mpirun -np 64 pdsyev.x $SIZE 8 8 64
+count=$((count+1))
+done

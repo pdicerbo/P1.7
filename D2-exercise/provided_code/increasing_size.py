@@ -1,17 +1,18 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# data  = np.loadtxt("4000plasma_timing.dat")
-# data2  = np.loadtxt("plasma_timing.safe")
-# data3  = np.loadtxt("10plasma_timing.dat")
-threads = np.loadtxt("plasma_timing.safe")
-size_m = threads[:,0]
+data  = np.loadtxt("4000plasma_timing.dat")
+data2  = np.loadtxt("plasma_timing.safe")
+data3  = np.loadtxt("10plasma_timing.dat")
 
-data = np.loadtxt("4000new_timing.dat")
-data2 = np.loadtxt("scaling_timing.dat")
-data3 = np.loadtxt("10new_timing.dat")
+# threads = np.loadtxt("plasma_timing.safe")
+# size_m = threads[:,0]
 
-# size_m = data[:,0]
+# data = np.loadtxt("4000new_timing.dat")
+# data2 = np.loadtxt("scaling_timing.dat")
+# data3 = np.loadtxt("10new_timing.dat")
+
+size_m = data[:,0]
 sec1   = data[:,1]
 sec2   = data2[:,1]
 sec3   = data3[:,1]
@@ -100,10 +101,11 @@ plt.errorbar(s, speedup3, yerr=err3, label = '10000x10000')
 plt.errorbar(s, speedup2, yerr=err2, label = '8000x8000')
 plt.errorbar(s, speedup1, yerr=err1, label = '4000x4000')
 
-plt.title('Speedup for PLASMA library (ULISSE)')
-plt.title('Speedup for ScaLAPACK library (ULISSE)')
+plt.title('Speedup for DSYEV for PLASMA library (ULISSE)')
+# plt.title('Speedup for DSYEV for ScaLAPACK library (ULISSE)')
 plt.xlabel('# Threads')
 plt.ylabel('Speedup')
 plt.legend(bbox_to_anchor = (.38, 1.))
 # plt.show()
-plt.savefig('scaling_scalapack.png')
+# plt.savefig('scaling_scalapack.png')
+plt.savefig('scaling_plasma.png')

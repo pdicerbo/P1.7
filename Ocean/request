@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#PBS -N ocean_cuda
+#PBS -l walltime=00:01:00
+#PBS -l nodes=1:ppn=20:gpu
+#PBS -q gpu
+
+cd $PBS_O_WORKDIR
+
+module load cudatoolkit/6.5
+
+./serial_ocean.sh
+./cuda_ocean.sh

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#PBS -N magma
+#PBS -l walltime=00:01:10
+#PBS -l nodes=1:ppn=20:gpu
+#PBS -q gpu
+
+cd $PBS_O_WORKDIR
+
+module load intel/14.0
+module load mkl/11.1
+module load cudatoolkit/6.5
+module load magma/1.6.1/intel/14.0/mkl/11.1/cudatoolkit/6.5
+
+./magma_dsyevd.x 1000

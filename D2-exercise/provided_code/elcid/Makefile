@@ -3,7 +3,7 @@ CC=icc
 MKLROOT=/opt/intel/mkl
 HWLOC_HOME=/u/mhpc/pdicerbo/MyLib/hwloc
 C_FLAGS=-O3 -I$(PLASMA_INC)  -openmp -I${MKLROOT}/include -I$(HWLOC_HOME)/include 
-PLASMA_LIBRARY=-L$(PLASMA_LIB) -lplasma -lcoreblasqw -lcoreblas -lquark -llapacke -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_core.a ${MKLROOT}/lib/intel64/libmkl_intel_thread.a -Wl,--end-group -lpthread -lm -L$(HWLOC_HOME)/lib -lhwloc -openmp 
+PLASMA_LIBRARY=-L$(PLASMA_LIB) -lplasma -lcoreblasqw -lcoreblas -lquark -llapacke -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_core.a ${MKLROOT}/lib/intel64/libmkl_intel_thread.a -Wl,--end-group -lpthread -lm -openmp # -L$(HWLOC_HOME)/lib -lhwloc -openmp 
 
 .PHONY: all
 all: test_plasma.x  

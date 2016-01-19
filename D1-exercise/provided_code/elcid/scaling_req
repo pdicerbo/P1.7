@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #PBS -N scalapack
-#PBS -l walltime=06:40:00
+#PBS -l walltime=12:00:00
 #PBS -l nodes=1:ppn=64
 #PBS -q blade
 
@@ -12,14 +12,14 @@ module load mkl/intel
 
 SIZE=18000
 
-count=1
-while [ $count -le 6 ]
-do
-mpirun -np 1 pdsyev.x $SIZE 1 1 64
-count=$((count+1))
-done
+# count=1
+# while [ $count -le 6 ]
+# do
+# mpirun -np 1 pdsyev.x $SIZE 1 1 64
+# count=$((count+1))
+# done
 
-count=1
+count=5
 while [ $count -le 6 ]
 do
 mpirun -np 2 pdsyev.x $SIZE 2 1 64

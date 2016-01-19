@@ -284,7 +284,7 @@ __global__ void ocean_kernel(int *red_grid, int *black_grid, int xdim, int ydim,
       edge = (row + 1) / 2;
       edge *= 2;
       loc  += edge; // need to skip the elements in the boundaries
-      if( row % 2 ){
+      if( row & 1 ){
 	left = loc - 1;
 	right = loc;
       }
@@ -306,7 +306,7 @@ __global__ void ocean_kernel(int *red_grid, int *black_grid, int xdim, int ydim,
       edge *= 2;
       loc  += edge; // need to skip the elements in the boundaries
 
-      if( row % 2 ){
+      if( row & 1 ){
 	left = loc;
 	right = loc + 1;
       }

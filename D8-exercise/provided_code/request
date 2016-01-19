@@ -17,9 +17,12 @@ do
 
 count=1
 
-while[ $count -le 6 ]
+while [ $count -le 6 ]
 do
-./magma_dsyevd.x $SIZE
-count=$((count+1))
+
+    ./magma_dsyevd.x $SIZE
+    count=$((count+1))
+
 done
+
 done

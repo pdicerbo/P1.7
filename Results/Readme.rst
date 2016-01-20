@@ -1,5 +1,5 @@
 P1.7 Results
-============================
+============
 
 In this report I will present the results of the benchmarks done during the P1.7 course.
 In the first part I show the tests done with different libraries (Intel MKL and OpenBLAS) and the performances obtained from three different functions.
@@ -9,7 +9,7 @@ Most of the plot that will be shown were obtained by repeating 6 (otherwise 10) 
 Error bars associated with each point was obtained by calculating the standard deviation of these measures.
 
 Intel MKL vs OpenBLAS
-#######################
+#####################
 
 The purpose of this section is to compare the performances obtained from two different implementations of the following three particular functions:
 
@@ -48,7 +48,7 @@ This appens also for DGEMM for matrix size greater than 1000, while for matrix s
 better performances with respect to Intel MKL.
 	   
 
-SCALAPACK PDSYEV Benchmark
+ScaLAPACK PDSYEV Benchmark
 ##########################
 
 In this section I show the results for DSYEV function of ScaLAPACK library. This function calculates the eigenvalues (and eigenvectors optionally) for a given matrix.
@@ -72,4 +72,17 @@ The following plot shows the execution time in function of the matrix size obtai
 As one can see in this case the best grid configuration is 4x6, while it was expected to be 2x12. Actually, the reason of this fatc is not totally clear and we should
 carry out more extensive tests using commands like :code:`numactl`.
 
+ScaLAPACK - PLASMA Comparison
+#############################
 
+In this section I show the results for the comparison between ScaLAPACK and PLASMA libraries. PLASMA is a library that contains a multithread implementation of some LAPACK routines.
+In order to gain the scaling properties for ScaLAPACK I used the best configuration obtained in the previous section.
+In the following three plots I shows the speedup obtained respectively for matrix size 4000, 8000, 10000:
+
+.. image:: plots/scaling_4000.png
+
+.. image:: plots/scaling_8000.png
+
+.. image:: plots/scaling_10.png
+
+As one can see PLASMA scale really well, while ScaLAPACK not.

@@ -82,6 +82,10 @@ In the following three plots I shows the execution time for PLASMA_DSYEV and for
 
 .. image:: plots/timing_10000.png
 
+As one can see, the PLASMA_DSYEV function produces much better results that the PDSYEV function.
+
+**Scaling**
+
 In the following three plots I shows the speedup obtained respectively for matrix size 4000, 8000, 10000:
 
 .. image:: plots/scaling_4000.png

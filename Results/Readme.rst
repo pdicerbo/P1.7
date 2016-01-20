@@ -70,13 +70,14 @@ The following plot shows the execution time in function of the matrix size obtai
 .. image:: plots/pdsyev_timing_cosint.png
 
 As one can see in this case the best grid configuration is 4x6, while it was expected to be 2x12. Actually, the reason of this fatc is not totally clear and we should
-carry out more extensive tests using commands like :code:`numactl`.
+carry out more extensive tests using commands like :code:`numactl`. However I don't have enough time to do that (only because I am too much slow...).
 
 ScaLAPACK - PLASMA Comparison
 #############################
 
 In this section I show the results for the comparison between ScaLAPACK and PLASMA libraries. PLASMA is a library that contains a multithread implementation of some LAPACK routines.
-In order to gain the scaling properties for ScaLAPACK I used the best configuration obtained in the previous section.
+In this test we use the PLASMA_DSYEV function and compare the results with those obtained from PDSYEV of PLASMA.
+In order to gain the scaling properties from PDSYEV I used the best configuration obtained in the previous section.
 In the following three plots I shows the speedup obtained respectively for matrix size 4000, 8000, 10000:
 
 .. image:: plots/scaling_4000.png
@@ -85,13 +86,26 @@ In the following three plots I shows the speedup obtained respectively for matri
 
 .. image:: plots/scaling_10.png
 
-As one can see DSYEV of PLASMA scale pretty well, while PDSYEV of ScaLAPACK not. In order to obtain a better visibility of the scaling properties as a function of the
-matrix size, I also grouped the behaviours for PLASMA and ScaLAPACK libraries separately. These behaviours are showed in the following plots:
+As one can see PLASMA_DSYEV scale pretty well, while PDSYEV of ScaLAPACK not. In order to obtain a better visibility of the scaling properties as a function of the
+matrix size, I also grouped the behaviours for PLASMA and ScaLAPACK libraries separately. These behaviours are shown in the following plots:
 
 .. image:: plots/scaling_scalapack.png
 
 .. image:: plots/scaling_plasma.png
 
 DSYEV of PLASMA scale pretty well with the size of the matrix.
+
+
+*"Optionally"*: **PLASMA_DSYEV scaling on ELCID**
+
+Since each ELCID node is equipped with 4 AMD CPUs with 16 core each, I was extremely curious to mesure the scaling properties of PLASMA_DSYEV function with this "big" amount of cores.
+The results obtained are shown in the following plots (for matrix size 10000 and 18000):
+
+.. image:: plots/scaling_10000_elcid.png
+
+.. image:: plots/scaling_18000_elcid.png
+
+Clearly, these results are much worse than those obtained on ULISSE.
+
 
 

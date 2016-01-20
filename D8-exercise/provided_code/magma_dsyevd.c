@@ -278,6 +278,13 @@ int main (int argc, char* argv[])
   //      magma_free_pinned(void*)
   
   // HINT - Finalize magma using function magma_finalize() 
+  free(A);
+  free(w);
+  free(work);
+  free(iwork);
+  free(da);
+  free(wa);
+
   magma_finalize();
   
   return 0;

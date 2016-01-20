@@ -14,20 +14,20 @@ DAXPY, that perform the following operation (vector - vector):
 
 .. code::
 
-   y = a * x + y; a \in \mathbb{R}; x, y vectors; \mathbf{2 * n operations}
+   $y = a * x + y; a \in \mathbb{R}$; $x$, $y$ vectors; $\mathbf{2 * n operations}$
 
 DGEMV, that perform the following operation (matrix - vector):
 
 .. code::
 
-   y = \alpha * A * x + \beta * y; \alpha , \beta \in \mathbb{R}; x, y vectors; A matrix; \mathbf{2 * n^2 operations}
+   $y = \alpha * A * x + \beta * y; \alpha , \beta \in \mathbb{R}$; $x, y$ vectors; $A$ matrix; $\mathbf{2 * n^2 operations}$
 
 
 DGEMM, that perform the following operation (matrix - matrix):
 
 .. code::
 
-   C = \alpha * A * B + \beta * C; \alpha, \beta \in \mathbb{R}; A, B, C matrices; \mathbf{2 * n^3 operations}
+   $C = \alpha * A * B + \beta * C; \alpha, \beta \in \mathbb{R}; A, B, C$ matrices; $\mathbf{2 * n^3 operations}$
 
 As you can see, this functions are choosen because of their different scaling properties with respect to the size of the problem.
 

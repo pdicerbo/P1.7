@@ -124,7 +124,8 @@ routine for the three libraries (ScaLAPACK, PLASMA and MAGMA).
 
 .. image:: plots/final_comparison.png
 
-As one can see the PLASMA_DSYEV routine is the ones the yelds the best results.
+As one can see the PLASMA_DSYEV routine is the ones the yelds the best results. Actually we expect that MAGMA would produce the best results.
+However this library is still developing, and moreover the bandwidth between CPU and GPU is too big to produce better performances with respect to the multithread approach.
 
 
 

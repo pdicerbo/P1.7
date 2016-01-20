@@ -31,13 +31,13 @@ n_tmp = 0.
 while i < len(sec):
     while j < rep:
         t_tmp += sec[i + j]
-        n_tmp += nsec[i + j - rep]
+        n_tmp += nsec[i + j]
         j += 1
 
 
     s[count] = size_m[i]
     t[count] = t_tmp / rep
-    nt[count - 1] = n_tmp / rep
+    nt[count] = n_tmp / rep
     
     t_tmp = 0.
     n_tmp = 0.
@@ -45,11 +45,11 @@ while i < len(sec):
 
     while j < rep:
         t_tmp += (sec[i + j] - t[count])**2
-        n_tmp += (nsec[i + j - rep] - nt[count - 1])**2
+        n_tmp += (nsec[i + j] - nt[count])**2
         j += 1
 
     err[count] = (t_tmp / (rep - 1.))**0.5
-    nerr[count - 1] = (n_tmp / (rep - 1.))**0.5
+    nerr[count] = (n_tmp / (rep - 1.))**0.5
     
     t_tmp = 0.
     n_tmp = 0.
@@ -64,15 +64,15 @@ plt.figure()
 plt.errorbar(s, speedup, yerr=err, label = 'PLASMA')
 plt.errorbar(s, nspeedup, yerr=nerr, label = 'ScaLAPACK')
 plt.plot(s, s, label = 'Theor')
-plt.title('Speedup for DSYEV for matrix size = 10000 (ELCID)')
-# plt.title('Speedup for matrix size = 18000 (ELCID)')
+
+# plt.title('Speedup for DSYEV for matrix size = 10000 (ELCID)')
+plt.title('Speedup for matrix size = 18000 (ELCID)')
 
 plt.xlabel('# Threads')
 plt.ylabel('Speedup')
 plt.legend(bbox_to_anchor = (.35, 1.))
 
-plt.show()
+# plt.show()
 
 # plt.savefig('scaling_10000_elcid.png')
-# plt.savefig('scaling_4000.png')
-# plt.savefig('scaling_10.png')
+plt.savefig('scaling_18000_elcid.png')

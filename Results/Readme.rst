@@ -14,7 +14,7 @@ DAXPY, that perform the following operation (vector - vector):
 
 .. math::
 
-   y = a * x + y; a \in \mathbb{R}; x, y vectors; \mathbf{2 * n operations}
+   y = a \\cdot x + y; a \\in \\mathbb{R}; x, y vectors; \\mathbf{2 * n operations}
 
 DGEMV, that perform the following operation (matrix - vector):
 

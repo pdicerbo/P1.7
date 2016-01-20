@@ -13,7 +13,7 @@ module load plasma/2.8.0/intel/mkl
 
 SIZE=20000
 
-for TH in 1 2 4 8 16 24 32 48 64
+for TH in 16 24 32 48 64 #1 2 4 8 16 24 32 48 64
 do
 
 # NDIM=$((4000+1000*$S))

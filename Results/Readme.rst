@@ -37,7 +37,7 @@ where :math:`a` and :math:`b` are two moltiplicative constants while :math:`A`, 
 This functions are choosen because of their different scaling properties with respect to the size of the problem. In the following there is the results obtained on the ULISSE cluster:
 
 .. image:: plots/mkl_vs_openblas.png
-   :scale: 50 %
+   :scale: 10%
    :alt: Intel MKL vs OpenBLAS
    :align: center
 

@@ -41,7 +41,7 @@ This functions are choosen because of their different scaling properties with re
 
 .. image:: plots/mkl_vs_openblas.png
 
-Both sources were compiled with gcc compiler and library statically linked. As you can see, the plot clearly shows that increasing the size of the matrix DAXPY and DGEMV
+Both sources were compiled with gcc compiler and library statically linked. As one can see, the plot clearly shows that increasing the size of the matrix DAXPY and DGEMV
 are memory bounded while DGEMM is compute bounded. For DAXPY and DGEMV and for matrix size less than 2500 the Intel MKL library
 achieves better performances with respect to OpenBLAS, while for size greater than 2500 the performances are more or less the same.
 This appens also for DGEMM for matrix size greater than 1000, while for matrix size less than 1000 seems that ObenBLAS achieves slightly
@@ -51,22 +51,25 @@ better performances with respect to Intel MKL.
 SCALAPACK PDSYEV Benchmark
 ##########################
 
-In this exercise I show the results for DSYEV function of ScaLAPACK library. This function calculates the eigenvalues (and eigenvectors optionally) for a given matrix.
+In this section I show the results for DSYEV function of ScaLAPACK library. This function calculates the eigenvalues (and eigenvectors optionally) for a given matrix.
 ScaLAPACK is an implementation of a subset of LAPACK routines for distributed memory, and requires more complex data structures in order to perform the desidered operations.
 In the case of DSYEV functionality, ScaLAPACK spawns the processes as in a "grid" and distributes the matrix among processes; this distribution is performed in order to obtain the best load balance
-(taking into account computation and communication). To achieve the best performance we have to choose the grid in witch spawn the processes in order to exploit the hardware available.
+(taking into account computation and communication). To achieve the best performance we have to choose the grid configuration in witch spawn the processes in order to exploit the hardware available.
 
 The following plot shows the execution time in function of the matrix size obtained on ULISSE cluster.
 
 .. image:: plots/pdsyev_timing_ulisse.png
 
-As you can see the best grid choice is 2x10, that for a matrix 18000x18000 reduces for almost 20 % the execution time compared with the worst configuration (1x20).
-This result is reasonable, because each ULISSE node has a dual socket CPU, and each socket has it's own RAM. A 2x10 processors grid allow to exploit this hardware configuration.
+As one can see the best grid configuration is 2x10, that for a matrix 18000x18000 reduces for almost 20 % the execution time compared with the worst configuration (1x20).
+This result is reasonable, because each ULISSE node has a dual socket CPU, and each socket has 10 cores and has it's own RAM.
+A 2x10 processors grid allow to exploit this hardware configuration.
 
-To confirm this result I've done the same test on COSINT cluster. The following plot shows the execution time in function of the matrix size obtained on COSINT cluster.
+To confirm this result I've done the same test on COSINT cluster. Each COSINT node is equipped with a dual socket CPU, and each socket cpu has 12 cores.
+The following plot shows the execution time in function of the matrix size obtained on COSINT cluster.
 
 .. image:: plots/pdsyev_timing_cosint.png
 
-As you can .
+As one can see in this case the best grid configuration is 4x6, while it was expected to be 2x12. Actually, the reason of this fatc is not totally clear and we should
+carry out more extensive tests using commands like :code:`numactl`.
 
 

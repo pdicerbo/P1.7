@@ -96,7 +96,7 @@ matrix size, I also grouped the behaviours for PLASMA and ScaLAPACK libraries se
 DSYEV of PLASMA scale pretty well with the size of the matrix.
 
 
-*"Optionally"*: **PLASMA_DSYEV scaling on ELCID**
+*"Optional"*: **PLASMA_DSYEV scaling on ELCID**
 
 Since each ELCID node is equipped with 4 AMD CPUs with 16 core each, I was extremely curious to mesure the scaling properties of PLASMA_DSYEV function with this "big" amount of cores.
 The results obtained are shown in the following plots (for matrix size 10000 and 18000):
@@ -105,7 +105,14 @@ The results obtained are shown in the following plots (for matrix size 10000 and
 
 .. image:: plots/scaling_18000_elcid.png
 
-Clearly, these results are much worse than those obtained on ULISSE.
+Clearly, these results are much worse than those obtained on ULISSE. These behaviours seems to be due to the CPU architecture: indeed the CPU cores shares in pair the Floating Points Units (FPU),
+and this combined with the multithreading yelds these results.
+
+
+MAGMA results and final comparison
+##################################
+
+In this section I present results of the MAGMA Benchmarck.
 
 
 

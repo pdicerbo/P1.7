@@ -2,15 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 data  = np.loadtxt("4000plasma_timing.dat")
-data2  = np.loadtxt("plasma_timing.safe")
+data2  = np.loadtxt("8000plasma_timing.dat")
 data3  = np.loadtxt("10plasma_timing.dat")
 
-# threads = np.loadtxt("plasma_timing.safe")
+# threads = np.loadtxt("10plasma_timing.dat")
 # size_m = threads[:,0]
 
-# data = np.loadtxt("4000new_timing.dat")
-# data2 = np.loadtxt("scaling_timing.dat")
-# data3 = np.loadtxt("10new_timing.dat")
+# data = np.loadtxt("4000scalapack_timing.dat")
+# data2 = np.loadtxt("8000scalapack_timing.dat")
+# data3 = np.loadtxt("10scalapack_timing.dat")
 
 size_m = data[:,0]
 sec1   = data[:,1]
@@ -106,6 +106,6 @@ plt.title('Speedup for DSYEV for PLASMA library (ULISSE)')
 plt.xlabel('# Threads')
 plt.ylabel('Speedup')
 plt.legend(bbox_to_anchor = (.38, 1.))
-# plt.show()
+plt.show()
 # plt.savefig('scaling_scalapack.png')
-plt.savefig('scaling_plasma.png')
+# plt.savefig('scaling_plasma.png')

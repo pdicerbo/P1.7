@@ -42,7 +42,7 @@ This functions are choosen because of their different scaling properties with re
 .. image:: plots/mkl_vs_openblas.png
    :scale: 20
 
-Both sources were compiled with gcc compiler. As you can see, the plot clearly shows that increasing the size of the matrix DAXPY and DGEMV are memory bounded while DGEMM is compute bounded.
+Both sources were compiled with gcc compiler and library statically linked. As you can see, the plot clearly shows that increasing the size of the matrix DAXPY and DGEMV are memory bounded while DGEMM is compute bounded.
 For DAXPY and DGEMV and for matrix size less than 2500 the Intel MKL library achieves better performances with respect to OpenBLAS, while for size
 greater than 2500 the performances are more or less the same. This appens also for DGEMM for matrix size greater than 1000, while for matrix size less than 1000 seems that ObenBLAS achieves slightly
 better performances with respect to Intel MKL.
@@ -51,5 +51,8 @@ better performances with respect to Intel MKL.
 SCALAPACK DSYEV Benchmark
 ##########################
 
-
+In this exercise I show the results for DSYEV function of ScaLAPACK library. This function calculate the eigenvalues (and eigenvectors optionally) for a given matrix.
+ScaLAPACK is an implementation of a subset of LAPACK routines for distributed memory, and requires more complex data structures in order to perform the desidered operations.
+In the case of DSYEV functionality, ScaLAPACK will spawn the processes as in a "grid" and will distribute the matrix among processes; this distribution is performed in order to obtain the best load balance
+(taking into account computation and communication). To achieve the best performance we have to choose the grid in witch spown the processes.
 

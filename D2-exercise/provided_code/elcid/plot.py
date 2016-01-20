@@ -66,7 +66,7 @@ plt.errorbar(s, nspeedup, yerr=nerr, label = 'ScaLAPACK')
 plt.plot(s, s, label = 'Theor')
 
 # plt.title('Speedup for DSYEV for matrix size = 10000 (ELCID)')
-plt.title('Speedup for matrix size = 18000 (ELCID)')
+plt.title('Speedup for DSYEV for matrix size = 18000 (ELCID)')
 
 plt.xlabel('# Threads')
 plt.ylabel('Speedup')

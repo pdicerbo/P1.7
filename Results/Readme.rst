@@ -85,4 +85,13 @@ In the following three plots I shows the speedup obtained respectively for matri
 
 .. image:: plots/scaling_10.png
 
-As one can see PLASMA scale really well, while ScaLAPACK not.
+As one can see DSYEV of PLASMA scale pretty well, while PDSYEV of ScaLAPACK not. In order to obtain a better visibility of the scaling properties as a function of the
+matrix size, I also grouped the behaviours for PLASMA and ScaLAPACK libraries separately. These behaviours are showed in the following plots:
+
+.. image:: plots/scaling_scalapack.png
+
+.. image:: plots/scaling_plasma.png
+
+DSYEV of PLASMA scale pretty well with the size of the matrix.
+
+

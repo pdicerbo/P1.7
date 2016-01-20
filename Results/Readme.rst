@@ -119,6 +119,13 @@ the matrix is initially in CPU host memory but the calculation can be performed 
 
 .. image:: plots/magma_timing.png
 
+I don't have enough time to try different configurations (like using pinned memory etc...). In the end, the following plot shows the execution time for the DSYEV
+routine for the three libraries (ScaLAPACK, PLASMA and MAGMA).
+
+.. image:: plots/final_comparison.png
+
+As one can see the PLASMA_DSYEV routine is the ones the yelds the best results.
+
 
 
 

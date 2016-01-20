@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#PBS -N wave
+#PBS -l walltime=01:33:00
+#PBS -l nodes=1:ppn=20
+#PBS -q reserved3
+
+cd $PBS_O_WORKDIR
+
+module load intel/14.0
+
+echo "STD NOTATION:"
+for i in 0 1 2 3 4 5
+do
+./std.x
+done
+echo ""
+echo "ARRAY NOTATION:"
+for i in 0 1 2 3 4 5
+do
+./AN.x
+done
+echo ""
+echo "PRAGMA FLAG:"
+for i in 0 1 2 3 4 5
+do
+./pragma.x
+done

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#PBS -N dgemm
+#PBS -l walltime=00:20:00
+#PBS -l nodes=1:ppn=20
+#PBS -q reserved3
+
+cd $PBS_O_WORKDIR
+
+module load intel/14.0
+module load mkl/11.1
+
+for nrep in 0 1 2 3 4 5
+do
+./exercise1-matrixmult-blas.x
+done

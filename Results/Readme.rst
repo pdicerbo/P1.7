@@ -12,7 +12,7 @@ The purpose of this section is to compare the performances obtained from two dif
 
 DAXPY, that perform the following operation (vector - vector):
 
-.. code::
+.. math::
 
    $y = a * x + y; a \in \mathbb{R}$; $x$, $y$ vectors; $\mathbf{2 * n operations}$
 

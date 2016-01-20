@@ -10,24 +10,29 @@ Intel MKL vs OpenBLAS
 
 The purpose of this section is to compare the performances obtained from two different implementations of three particular functions. The functions are the following:
 
-DAXPY, that perform the following operation (vector - vector):
+*DAXPY*, that perform the following operation:
 
-.. html:: latex
+.. math::
 
-   y = a \\cdot x + y; a \\in \\mathbb{R}; x, y vectors; \\mathbf{2 * n operations}
+   y = a * x + y;
 
-DGEMV, that perform the following operation (matrix - vector):
+where :math:`a` is a moltiplicative constant while :math:`x` and :math:`y` are vectors of dimension N. This function perform :math:`2 N` operations.
 
-.. code::
+*DGEMV*, that perform the following operation:
 
-   $y = \alpha * A * x + \beta * y; \alpha , \beta \in \mathbb{R}$; $x, y$ vectors; $A$ matrix; $\mathbf{2 * n^2 operations}$
+.. math::
 
+   y = a * A * x + b * y;
 
-DGEMM, that perform the following operation (matrix - matrix):
+where :math:`a` and :math:`b` are two moltiplicative constants while :math:`x` and :math:`y` are vectors of dimension N. This function perform :math:`2 N^2` operations.
 
-.. code::
+*DGEMM*, that perform the following operation:
 
-   $C = \alpha * A * B + \beta * C; \alpha, \beta \in \mathbb{R}; A, B, C$ matrices; $\mathbf{2 * n^3 operations}$
+.. math::
+
+   C = a * A * B + b * C;
+
+where :math:`a` and :math:`b` are two moltiplicative constants while :math:`A`, :math:`B` and :math:`C` are vectors of dimension N. This function perform :math:`2 N^3` operations.
 
 As you can see, this functions are choosen because of their different scaling properties with respect to the size of the problem.
 

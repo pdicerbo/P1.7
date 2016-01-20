@@ -60,4 +60,13 @@ The following plot shows the execution time in function of the matrix size obtai
 
 .. image:: plots/pdsyev_timing_ulisse.png
 
-As you can see the best grid choice is 2x10.
+As you can see the best grid choice is 2x10, that for a matrix 18000x18000 reduces for almost 20 % the execution time compared with the worst configuration (1x20).
+This result is reasonable, because each ULISSE node has a dual socket CPU, and each socket has it's own RAM. A 2x10 processors grid allow to exploit this hardware configuration.
+
+To confirm this result I've done the same test on COSINT cluster. The following plot shows the execution time in function of the matrix size obtained on COSINT cluster.
+
+.. image:: plots/pdsyev_timing_cosint.png
+
+As you can .
+
+

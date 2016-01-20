@@ -78,6 +78,10 @@ ScaLAPACK - PLASMA Comparison
 In this section I show the results for the comparison between ScaLAPACK and PLASMA libraries. PLASMA is a library that contains a multithread implementation of some LAPACK routines.
 In this test we use the PLASMA_DSYEV function and compare the results with those obtained from PDSYEV of PLASMA.
 In order to gain the scaling properties from PDSYEV I used the best configuration obtained in the previous section.
+In the following three plots I shows the execution time for PLASMA_DSYEV and for PDSYEV functions.
+
+.. image:: plots/timing_10000.png
+
 In the following three plots I shows the speedup obtained respectively for matrix size 4000, 8000, 10000:
 
 .. image:: plots/scaling_4000.png

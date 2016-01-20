@@ -112,7 +112,13 @@ and this combined with the multithreading yelds these results.
 MAGMA results and final comparison
 ##################################
 
-In this section I present results of the MAGMA Benchmarck.
+In this section I present results of the MAGMA Benchmarck. MAGMA is a library for hybrid computing (he want to exploit the GPUs to perform calculations).
+In this test we use three version of the magma dsyevd routine to calculate the eigenvalues of a matrix using the gpu. In the first version (*magma_dsyevd*)
+the matrix is initially in CPU host memory, in the second version (*magma_dsyevd_gpu*) matrix is initially in GPU device memory while in the third version
+the matrix is initially in CPU host memory but the calculation can be performed with more than one GPU. The results obtained are shown in the following plot:
+
+.. image:: plots/magma_timing.png
+
 
 
 

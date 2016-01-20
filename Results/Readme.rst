@@ -39,7 +39,9 @@ This functions are choosen because of their different scaling properties with re
 .. image:: plots/mkl_vs_openblas.png
    :scale: 20
 
-As you can see, the plot clearly show that DAXPY and DGEMV are memory bounded while DGEMM is cpu bounded.
+As you can see, the plot clearly show that increasing the size of the matrix DAXPY and DGEMV are memory bounded while DGEMM is cpu bounded.
+Moreover for matrix size less than 2500 the Intel MKL library exploit better performances with respect to OpenBLAS.
+For matrix size greater than 2500 the performances are more or less the same.
 	   
 
 
